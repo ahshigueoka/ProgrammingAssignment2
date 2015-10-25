@@ -1,5 +1,21 @@
 ## Put comments here that give an overall description of what your
 ## functions do
+#
+# The function makeCacheMatrix creates a list of functions
+# that manipulate the variables inside makeCacheMatrix's
+# environment, so that it is only possible to alter
+# the matrix 'x' and its inverse by using the setter
+# and getter functions. This way, it is possible to store
+# the inverse of 'x' for future uses without having to
+# compute it all repeatedly.
+#
+# The function cacheSolve manages the values stored in
+# the makeCacheMatrix enviroment in order to ensure that
+# the values of the matrix 'x' and its inverse are always
+# sychronised. In case they are not, cacheSolve proceeds
+# to the updating of the inverse matrix stored in
+# makeCacheMatrix's environment
+
 
 ## Write a short comment describing this function
 # makeCacheMatrix
@@ -16,13 +32,13 @@ makeCacheMatrix <- function(x = matrix()) {
     xinv <- NULL
 
     set <- function(mat) {
-        x <- mat
-        xinv <- NULL
+        x <<- mat
+        xinv <<- NULL
     }
 
     get <- function() x
 
-    setinv <- function(matinv) xinv <- matinv
+    setinv <- function(matinv) xinv <<- matinv
 
     getinv <- function() xinv
 
@@ -49,4 +65,14 @@ makeCacheMatrix <- function(x = matrix()) {
 #
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
+    cached_inv <- x$getinv()
+    if(!is.null(cached_inv)) {
+        message("Returning cached data.")
+    }
+    else {
+        mat <- x$get()
+        cached_inv <- solve(mat, ...)
+        x$setinv(cached_inv)
+    }
+    cached_inv
 }
