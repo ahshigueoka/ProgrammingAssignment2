@@ -19,7 +19,7 @@
 
 ## Write a short comment describing this function
 # makeCacheMatrix
-# accepts: numeric matrix x
+# accepts: numeric matrix 'x'
 # returns: list of functions [set, get, setinv, getinv]
 #
 # This functions abstracts the creation of a matrix object that
@@ -53,15 +53,19 @@ makeCacheMatrix <- function(x = matrix()) {
 #     object
 #
 # This function checks the variable cached_inv to see whether
-# the inverse stored in cached_inv correponds to the inverse
+# the inverse stored in 'cached_inv' correponds to the inverse
 # of the matrix in the specified matrix object 'x' by following
 # the logic:
 #
 # If cached_inv != NULL, then the inverse of the matrix in 'x'
 #     has already been computed and 'cached_inv' has already
-#     been updated. So just return 'cached_inv'.
+#     been updated.
 # Else, calculate the inverse of the matrix in 'x', update
-#     'cached_inv' and return it.
+#         'cached_inv', assuming it is invertible.
+# Return the restored/calculated 'cached_inv'
+#
+# Note that if the matrix in 'x' is empty, then a 1-by-1
+# matrix with a NA entry will be returned.
 #
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
